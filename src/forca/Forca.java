@@ -19,16 +19,23 @@ public class Forca {
     static public Random randon = new Random();
 
     static public void play() {
-        int i, vidas = 6, acertos = 0, acertosAnt = 0;
-        String dicionario[] = {"Morcego","Gato","Cachorro","Macaco","Cavalo","Gaivota","Girafa","Elefante","Ornitorrinco","Panda"};
+        int i, vidas = 6, acertos = 0, acertosAnt = 0,numeroLetras=0;
+        String dicionario[] = {"Gato","morcego","Gato","Cachorro","Macaco","Cavalo","Gaivota","Girafa","Elefante","Ornitorrinco","Panda","Bicho-preguiça"};
         
-        int numero = randon.nextInt(9);
+        int numero = randon.nextInt(12);
 
         String palavra_chave = dicionario[numero];
 
         String array_palavra[] = new String[palavra_chave.length()];
         for (i = 0; i < palavra_chave.length(); i++) {
-            array_palavra[i] = "_";
+            if(palavra_chave.substring(i,i+1).equals("-"))
+                array_palavra[i] = "-";
+            else if(palavra_chave.substring(i,i+1).equals(" "))
+                array_palavra[i] = " ";
+            else{
+                array_palavra[i] = "_";
+                numeroLetras++;
+            }
         }
 
         String letrasUsadas[] = new String[30];
@@ -81,7 +88,7 @@ public class Forca {
                 if (acertosAnt != acertos) {
                     JOptionPane.showMessageDialog(null,
                             "ACERTOU!", "FORCA", JOptionPane.INFORMATION_MESSAGE);
-                    if (acertos == palavra_chave.length()) {
+                    if (acertos == numeroLetras) {
                         JOptionPane.showMessageDialog(null,
                                 "Parabéns você ganhou!\n palavra: " + palavra_chave, "FORCA - ANIMAIS", JOptionPane.INFORMATION_MESSAGE);
                         break;
@@ -95,13 +102,11 @@ public class Forca {
                                 "Não foi dessa vez! você perdeu!\n palavra: " + palavra_chave, "FORCA - ANIMAIS", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     }
-                    continue;
                 }
 
             } catch (InvalidValueException e) {
                 JOptionPane.showMessageDialog(null,
                         "Valor invalido! Por favor informe uma unica letra", "FORCA - ANIMAIS", JOptionPane.WARNING_MESSAGE);
-                continue;
             } catch (java.lang.NullPointerException e) {
                 JOptionPane.showMessageDialog(null,
                         "Programa encerrado com sucesso!", "FORCA - ANIMAIS", JOptionPane.INFORMATION_MESSAGE);
